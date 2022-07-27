@@ -169,4 +169,8 @@ contract ProvideLiquidity is IERC721Receiver {
         //remove information related to tokenId
         delete deposits[tokenId];
     }
+
+    function tokenURI(uint256 tokenId) external view returns (string memory) {
+        return nonfungiblePositionManager.tokenURI(tokenId);
+    }
 }

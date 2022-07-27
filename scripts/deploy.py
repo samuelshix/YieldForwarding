@@ -10,6 +10,7 @@ from scripts.helpful_scripts import (
 )
 
 manager_address = "0xC36442B4A4522E871399CD717ABDD847AB11FE88"
+my_address = "0x61cF6c0B69d5B031f6CFd3b30F5f70F3e12D571A"
 
 
 def deploy_fund_me():
@@ -23,10 +24,13 @@ def deploy_fund_me():
     # print(f"Owner of NFT is {MockMint.nonfungiblePositionManager.ownerOf(tokenId)}")
     provide_liq = ProvideLiquidity.deploy(
         {"from": account},
-        # publish_source=config["networks"][network.show_active()].get("verify", False),
+        publish_source=config["networks"][network.show_active()].get("verify", False),
     )
-    # provide_liq.deposit()
-    update_front_end()
+    provide_liq.deposit("0x61cF6c0B69d5B031f6CFd3b30F5f70F3e12D571A", 21926)
+
+    # update_front_end()
+    test_uri = provide_liq.tokenURI(21926)
+    print(f"Token URI: {test_uri}")
     return provide_liq
 
 

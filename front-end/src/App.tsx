@@ -1,29 +1,25 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { ChainId, DAppProvider, Localhost } from "@usedapp/core"
+import { WagmiConfig, createClient, configureChains, defaultChains, useAccount, useEnsName } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 import { Header } from "./components/Header"
 import { Container } from "@material-ui/core"
 import { Main } from "./components/Main"
+import { InjectedConnector } from 'wagmi/connectors/injected';
+
 function App() {
+  // const alchemyId = process.env.ALCHEMY_ID
+  const { address, isConnected } = useAccount()
   return (
 
-    <DAppProvider config={{
-      supportedChains: [ChainId.Rinkeby],
-      readOnlyChainId: ChainId.Rinkeby,
-      multicallAddresses: {
-        [ChainId.Rinkeby]: "0x22c45Ad85f1dBfC4BbF0B393874fb94668Ce2a4D"
-      },
-      notifications: {
-        expirationPeriod: 1000,
-        checkInterval: 1000
-      }
-    }}>
-      <Header />
+    <>
+      <Header address={address} isConnected={isConnected} />
       <Container maxWidth="md">
-        <Main />
+        <Main userAddress={address} isConnected={isConnected} />
       </Container>
-    </DAppProvider>
+    </>
   )
 }
 
